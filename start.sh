@@ -1,4 +1,4 @@
 #!bin/bash
-git pull origin master
+git pull origin
 
 node ./App/server.js
