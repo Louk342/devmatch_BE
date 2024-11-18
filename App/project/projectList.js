@@ -10,16 +10,28 @@ router.get('/projectList', async (req, res) => {
                 p.project_id,
                 p.project_name,
                 p.description,
-                GROUP_CONCAT(ts.name) AS tech_stacks
+                COALESCE(
+                    JSON_ARRAYAGG(ts.name),
+                    JSON_ARRAY()
+                ) AS tech_stacks
             FROM Project p
             LEFT JOIN Project_Stack ps ON p.project_id = ps.project_id
             LEFT JOIN TechStack ts ON ps.stack_id = ts.stack_id
             GROUP BY p.project_id
             ORDER BY p.created_at DESC
-            LIMIT 4;
+            LIMIT 5;
         `;
         const [rows] = await db.query(query);
-        res.status(200).json(rows);
+
+        // JSON 배열 응답 처리
+        const projects = rows.map(project => ({
+            project_id: project.project_id,
+            project_name: project.project_name,
+            description: project.description,
+            tech_stacks: project.tech_stacks.filter(stack => stack !== null) // null 값 제거
+        }));
+
+        res.status(200).json(projects);
     } catch (error) {
         console.error('프로젝트 리스트 가져오기 오류:', error);
         res.status(500).json({ error: '프로젝트 리스트를 가져오는 중 오류가 발생했습니다.' });
