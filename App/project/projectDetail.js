@@ -12,7 +12,13 @@ router.get('/projectDetail', async (req, res) => {
     try {
         const query = `
             SELECT 
-                p.*, 
+                p.project_id, 
+                p.project_name, 
+                p.description, 
+                p.required_developers,
+                p.required_designers,
+                p.required_planners,
+                p.created_at,
                 ps.stack_id 
             FROM 
                 Project p
@@ -27,7 +33,25 @@ router.get('/projectDetail', async (req, res) => {
             return res.status(404).json({ message: 'Project not found' });
         }
 
-        res.status(200).json(results);
+        // 프로젝트 정보를 그룹화하여 스택 ID를 배열로 묶기
+        const projectDetail = {
+            project_id: results[0].project_id,
+            project_name: results[0].project_name,
+            description: results[0].description,
+            required_developers: results[0].required_developers,
+            required_designers: results[0].required_designers,
+            required_planners: results[0].required_planners,
+            created_at: results[0].created_at,
+            stack_id: []
+        };
+
+        results.forEach(row => {
+            if (row.stack_id) {
+                projectDetail.stack_id.push(row.stack_id);
+            }
+        });
+
+        res.status(200).json(projectDetail);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'An error occurred while fetching the project details' });
@@ -35,5 +59,3 @@ router.get('/projectDetail', async (req, res) => {
 });
 
 module.exports = router;
-
-//GET  http://devmatch.ddns.net/project/projectSearch?id=0
