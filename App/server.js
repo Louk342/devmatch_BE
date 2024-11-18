@@ -38,7 +38,7 @@ app.use(session({
     }
 }));
 
-app.get('/auth/checkSession', (req, res) => {
+app.get('/checkSession', (req, res) => {
     if (req.session.userId) {
         res.status(200).send({
             user: {
