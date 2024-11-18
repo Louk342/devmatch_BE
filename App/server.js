@@ -62,8 +62,6 @@ app.use('/project', require('./project/applyToProject'));
 app.use('/project', require('./project/projectSearch'));
 app.use('/project', require('./project/projectDetail'));
 
-app.use(cors());
-
 // 서버 실행
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
