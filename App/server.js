@@ -4,7 +4,6 @@ const express = require('express');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const app = express();
-app.use(express.json());
 
 const PORT = 2000;
 
@@ -12,6 +11,8 @@ app.use(cors({
     origin: true,
     credentials: true
 }));
+
+app.use(express.json());
 
 // MariaDB 세션 스토어 설정
 const sessionStore = new MySQLStore({
