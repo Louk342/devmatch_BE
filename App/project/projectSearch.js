@@ -6,7 +6,7 @@ router.get('/projectSearch', async (req, res) => {
     const { title } = req.query;
 
     if (!title) {
-        return res.status(400).json({ error: '검색값을 입력해 주세요' });
+        return res.status(400).json({ error: 'Title parameter is required' });
     }
 
     try {
@@ -29,7 +29,24 @@ router.get('/projectSearch', async (req, res) => {
             return res.status(404).json({ message: '프로젝트가 없습니다' });
         }
 
-        res.status(200).json(results);
+        // 프로젝트 정보를 그룹화하여 스택 ID를 배열로 묶기
+        const projectMap = {};
+        results.forEach(row => {
+            if (!projectMap[row.project_id]) {
+                projectMap[row.project_id] = {
+                    project_id: row.project_id,
+                    project_name: row.project_name,
+                    description: row.description,
+                    stack_id: []
+                };
+            }
+            projectMap[row.project_id].stack_id.push(row.stack_id);
+        });
+
+        // 객체를 배열로 변환하여 반환
+        const formattedResults = Object.values(projectMap);
+
+        res.status(200).json(formattedResults);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: '프로젝트 검색중 오류가 발생했습니다' });
