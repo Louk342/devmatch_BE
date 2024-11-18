@@ -56,7 +56,7 @@ app.use('/project', require('./project/projectDetail'));
 
 // CORS 미들웨어
 app.use(cors({
-    origin: '*', // 프런트엔드가 실행되는 출처
+    origin: true, // 프런트엔드가 실행되는 출처
     credentials: true // 쿠키 및 인증 정보를 포함하는 요청을 허용
 }));
 
