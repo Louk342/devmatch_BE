@@ -30,7 +30,7 @@ router.get('/projectDetail', async (req, res) => {
         const [results] = await db.query(query, [id]);
 
         if (results.length === 0) {
-            return res.status(404).json({ message: 'Project not found' });
+            return res.status(404).json({ message: '프로젝트를 조회할 수 없습니다' });
         }
 
         // 프로젝트 정보를 그룹화하여 스택 ID를 배열로 묶기
@@ -54,7 +54,7 @@ router.get('/projectDetail', async (req, res) => {
         res.status(200).json(projectDetail);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred while fetching the project details' });
+        res.status(500).json({ error: '프로젝트 정보 조회중 오류 발생' });
     }
 });
 
