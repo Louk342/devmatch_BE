@@ -23,12 +23,12 @@ router.get('/projectList', async (req, res) => {
         `;
         const [rows] = await db.query(query);
 
-        // JSON 배열 응답 처리
+        // JSON 문자열을 배열로 파싱하여 처리
         const projects = rows.map(project => ({
             project_id: project.project_id,
             project_name: project.project_name,
             description: project.description,
-            tech_stacks: project.tech_stacks.filter(stack => stack !== null) // null 값 제거
+            tech_stacks: JSON.parse(project.tech_stacks) // 문자열을 배열로 파싱
         }));
 
         res.status(200).json(projects);
