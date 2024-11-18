@@ -6,6 +6,10 @@ const db = require('./db');
 const app = express();
 app.use(express.json());
 
+console.log('SESSION_SECRET : ', process.env.SESSION_SECRET);
+
+console.log('DB host :', process.env.DB_HOST);
+
 const PORT = 2000;
 
 // MariaDB 세션 스토어 설정
