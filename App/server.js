@@ -59,6 +59,7 @@ app.use('/project', require('./project/applyToProject'));
 
 app.use('/project', require('./project/projectSearch'));
 app.use('/project', require('./project/projectDetail'));
+app.use('/project', require('./project/projectList'));
 
 // 서버 실행
 app.listen(PORT, () => {
