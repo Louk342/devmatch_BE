@@ -54,10 +54,10 @@ app.use('/project', require('./project/applyToProject'));
 app.use('/project', require('./project/projectSearch'));
 app.use('/project', require('./project/projectDetail'));
 
-// CORS 미들웨어
+
 app.use(cors({
-    origin: true, // 프런트엔드가 실행되는 출처
-    credentials: true // 쿠키 및 인증 정보를 포함하는 요청을 허용
+    origin: true,
+    credentials: true
 }));
 
 // 서버 실행
