@@ -27,9 +27,25 @@ router.post('/doLogin', [
             return res.status(401).send({ error: 'Invalid email or password' });
         }
 
+        // 세션에 사용자 정보 저장
         req.session.userId = user.user_id;
         req.session.username = user.username;
-        res.status(200).send({ message: '로그인 성공'});
+
+        // 세션 저장 후 응답
+        req.session.save(err => {
+            if (err) {
+                console.error('세션 저장 에러:', err);
+                return res.status(500).send({ error: '세션 저장 중 오류가 발생했습니다.' });
+            }
+            res.status(200).send({
+                message: '로그인 성공',
+                user: {
+                    user_id: user.user_id,
+                    username: user.username,
+                    email: user.email
+                }
+            });
+        });
     } catch (error) {
         console.error(error);
         res.status(500).send({ error: '로그인 에러' });

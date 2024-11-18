@@ -42,6 +42,19 @@ app.use(session({
     }
 }));
 
+app.get('/auth/checkSession', (req, res) => {
+    if (req.session.userId) {
+        res.status(200).send({
+            user: {
+                user_id: req.session.userId,
+                username: req.session.username
+            }
+        });
+    } else {
+        res.status(401).send({ message: 'Not authenticated' });
+    }
+});
+
 // 라우터 설정
 app.use('/auth', require('./auth/signup'));
 app.use('/auth', require('./auth/login'));
