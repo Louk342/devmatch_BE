@@ -60,13 +60,6 @@ app.use(cors({
     credentials: true // 쿠키 및 인증 정보를 포함하는 요청을 허용
 }));
 
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', 'true');
-    res.header('Access-Control-Allow-Credentials', 'true');
-    next();
-});
-
-
 // 서버 실행
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
