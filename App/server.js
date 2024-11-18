@@ -18,7 +18,7 @@ const sessionStore = new MySQLStore({
 
 // 세션 미들웨어 설정
 app.use(session({
-    key: 'session_cookie_name',
+    key: 'devmatch',
     secret: process.env.SESSION_SECRET,
     store: sessionStore,
     resave: false,
