@@ -38,7 +38,7 @@ router.post('/doLogin', [
                 return res.status(500).send({ error: '세션 저장 중 오류가 발생했습니다.' });
             }
             res.status(200).send({
-                message: '로그인 성공',
+                message: '세션 저장 성공',
                 user: {
                     user_id: user.user_id,
                     username: user.username,
