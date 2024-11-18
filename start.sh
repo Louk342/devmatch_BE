@@ -1,6 +1,6 @@
 #!bin/bash
 git pull origin
-
+npm i
 node ./App/server.js
 
 # cd ./App
