@@ -7,7 +7,7 @@ router.post('/doLogout', (req, res) => {
             return res.status(500).send({ error: 'An error occurred while logging out' });
         }
         res.clearCookie('session_cookie_name');
-        res.status(200).send({ message: 'Logout successful' });
+        res.status(200).send({ message: '로그아웃 성공' });
     });
 });
 

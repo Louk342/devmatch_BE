@@ -29,10 +29,10 @@ router.post('/doLogin', [
 
         req.session.userId = user.user_id;
         req.session.username = user.username;
-        res.status(200).send({ message: 'Login successful', user: { user_id: user.user_id, username: user.username, email: user.email } });
+        res.status(200).send({ message: '로그인 성공'});
     } catch (error) {
         console.error(error);
-        res.status(500).send({ error: 'An error occurred while logging in' });
+        res.status(500).send({ error: '로그인 에러' });
     }
 });
 

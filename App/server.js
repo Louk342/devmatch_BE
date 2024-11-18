@@ -6,6 +6,8 @@ const db = require('./db');
 const app = express();
 app.use(express.json());
 
+const PORT = 2000;
+
 // MariaDB 세션 스토어 설정
 const sessionStore = new MySQLStore({
     host: process.env.DB_HOST,
@@ -33,8 +35,14 @@ app.use('/auth', require('./auth/signup'));
 app.use('/auth', require('./auth/login'));
 app.use('/auth', require('./auth/logout'));
 
+app.use('/project', require('./project/projectUpload'));
+app.use('/project', require('./project/applyToProject'));
+
+app.use('/project', require('./project/projectSearch'));
+app.use('/project', require('./project/projectDetail'));
+
+
 // 서버 실행
-const PORT = 2000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

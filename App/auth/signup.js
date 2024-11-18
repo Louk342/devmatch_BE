@@ -9,23 +9,25 @@ router.post('/doSignup', [
     body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long'),
     body('email').isEmail().withMessage('Invalid email format'),
     body('role').isIn(['Developer', 'Designer', 'Planner']).withMessage('Invalid role'),
-    body('grade').isIn(['1', '2', '3', '4', 'Graduate']).withMessage('Invalid grade')
+    body('grade').isIn(['1', '2', '3', '4', 'Graduate']).withMessage('Invalid grade'),
+    body('university').optional().isString().withMessage('University must be a string'),
+    body('profile_info').optional().isString().withMessage('Profile information must be a string')
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { username, password, email, role, grade } = req.body;
+    const { username, password, email, role, grade, university, profile_info } = req.body;
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const query = `INSERT INTO User (username, password, email, role, grade) VALUES (?, ?, ?, ?, ?)`;
-        await db.query(query, [username, hashedPassword, email, role, grade]);
-        res.status(201).send({ message: 'User successfully registered' });
+        const query = `INSERT INTO User (username, password, email, role, grade, university, profile_info) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+        await db.query(query, [username, hashedPassword, email, role, grade, university, profile_info]);
+        res.status(201).send({ message: '회원가입 완료' });
     } catch (error) {
         console.error(error);
-        res.status(500).send({ error: 'An error occurred while registering the user' });
+        res.status(500).send({ error: '회원가입 오류' });
     }
 });
 
