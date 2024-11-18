@@ -8,6 +8,11 @@ app.use(express.json());
 
 const PORT = 2000;
 
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
+
 // MariaDB 세션 스토어 설정
 const sessionStore = new MySQLStore({
     host: process.env.DB_HOST,
@@ -53,12 +58,6 @@ app.use('/project', require('./project/applyToProject'));
 
 app.use('/project', require('./project/projectSearch'));
 app.use('/project', require('./project/projectDetail'));
-
-
-app.use(cors({
-    origin: true,
-    credentials: true
-}));
 
 // 서버 실행
 app.listen(PORT, () => {
