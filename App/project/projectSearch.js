@@ -55,4 +55,4 @@ router.get('/projectSearch', async (req, res) => {
 
 module.exports = router;
 
-//GET http://devmatch.ddns.net/project/projectSearch?title=example
+//GET http://devmatch.ddns.net/project/projectSearch?title=test
