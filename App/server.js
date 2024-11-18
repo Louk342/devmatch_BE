@@ -2,9 +2,7 @@ require('dotenv').config({ path: './.env' });
 const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
-
 const MySQLStore = require('express-mysql-session')(session);
-const db = require('./db');
 const app = express();
 app.use(express.json());
 
@@ -58,9 +56,16 @@ app.use('/project', require('./project/projectDetail'));
 
 // CORS 미들웨어
 app.use(cors({
-    origin: true, // 프런트엔드가 실행되는 출처
+    origin: '*', // 프런트엔드가 실행되는 출처
     credentials: true // 쿠키 및 인증 정보를 포함하는 요청을 허용
 }));
+
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+});
+
 
 // 서버 실행
 app.listen(PORT, () => {
